@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        
+        "rootDir": "./src",
+        "outDir": "./dist",
+        
+        "module": "CommonJS",
+        "target": "ES2022",
+        
+        "allowImportingTsExtensions": true,
+        "rewriteRelativeImportExtensions": true,
+        
+        "esModuleInterop": true,
+        "strict": true,
+        "skipLibCheck": true,
+        
+        "noImplicitAny": false,
+
+        "types": ["node", "./src/core/global.d.ts", "./src/web/global.d.ts"]
+    }
+}
