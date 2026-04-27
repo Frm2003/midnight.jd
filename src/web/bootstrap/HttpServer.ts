@@ -9,7 +9,7 @@ export default class HttpServer {
     }
 
     private registerRoutes(): void {
-        new Dispatcher(this.fastifyInstance).resolveHandler();
+        Dispatcher.resolver(this.fastifyInstance);
     }
 
     public async start() {

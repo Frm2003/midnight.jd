@@ -4,11 +4,15 @@ import Router from "./Router";
 export default class Dispatcher {
     private declare fastifyInstance: FastifyInstance;
 
-    constructor(fastifyInstance: FastifyInstance) {
+    private constructor(fastifyInstance: FastifyInstance) {
         this.fastifyInstance = fastifyInstance;
     }
 
-    public resolveHandler() {
+    static resolver(fastifyInstance: FastifyInstance): void {
+        new Dispatcher(fastifyInstance).registerRoutes();
+    }
+
+    private registerRoutes(): void {
         const routes: RouteDefinition[] = Router.discover();
 
         for (const { controller, httpMethod, method, path: url } of routes) {
