@@ -1,4 +1,4 @@
-import { FastifyReply } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
 
 export { };
 
@@ -21,4 +21,20 @@ declare global {
     type AnyController = {
         [key: string | symbol]: (...args: any[]) => any;
     };
+
+    type SourceParam = 'params' | 'body' | 'query';
+
+    interface ParamMetadata {
+        parameterIndex: number;
+        name?: string;
+        type: any;
+        source: SourceParam;
+    }
+
+    interface ParamResolver {
+        readonly source: SourceParam;
+        resolver(req: FastifyRequest, paramMetadata: ParamMetadata): any;
+    }
+
+    type Converter = (value: any) => any;
 }

@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify";
 import Router from "./Router";
+import ParameterResolver from "./Parameters/ParametersResolver";
 
 export default class Dispatcher {
     private declare fastifyInstance: FastifyInstance;
@@ -17,7 +18,8 @@ export default class Dispatcher {
 
         for (const { controller, httpMethod, method, path: url } of routes) {
             const handler: Handler = async (req, res) => {
-                const result = await controller![method].call(controller);
+                const args = ParameterResolver.getArgs(req, controller!, method)
+                const result = await controller![method].call(controller, ...args);
                 res.status(200).send(result);
             };
 
