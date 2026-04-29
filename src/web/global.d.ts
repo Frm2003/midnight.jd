@@ -3,8 +3,6 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 export { };
 
 declare global {
-    type BeanFactory<T = any> = () => T;
-
     type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
     type OriginalMethod = (...args: any[]) => any;

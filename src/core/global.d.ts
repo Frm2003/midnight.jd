@@ -1,6 +1,8 @@
 export { };
 
 declare global {
+    type BeanFactory<T = any> = () => T;
+
     type BeanScope = "singleton" | "transient"
 
     type ModuleConstructor<T = any> = new (...args: any[]) => T;
