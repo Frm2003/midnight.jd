@@ -7,8 +7,6 @@ declare global {
 
     type OriginalMethod = (...args: any[]) => any;
 
-    type Handler = (req: FastifyRequest, res: FastifyReply) => Promise<void>;
-
     type RouteDefinition = {
         path: string;
         httpMethod: HttpMethod;
@@ -31,8 +29,19 @@ declare global {
 
     interface ParamResolver {
         readonly source: SourceParam;
-        resolver(req: FastifyRequest, paramMetadata: ParamMetadata): any;
+        resolver(req: HttpRequest, paramMetadata: ParamMetadata): any;
     }
 
-    type Converter = (value: any) => any;
+    interface HttpRequest {
+        body?: any;
+        query?: Record<string, any>;
+        path?: Record<string, any>;
+        headers?: Record<string, string>;
+    }
+
+    export interface HttpServerAdapter {
+        registerRoute({}: RouteDefinition): void;
+        listen(port: number): Promise<void>;
+        logError(err: any): void;
+    }
 }

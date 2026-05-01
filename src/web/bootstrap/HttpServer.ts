@@ -1,23 +1,26 @@
-import fastify, { type FastifyInstance } from 'fastify';
-import Dispatcher from '../pipelines/Dispatcher';
+import Router from '../pipelines/Router';
 
 export default class HttpServer {
-    private fastifyInstance: FastifyInstance;
+    private serverAdapter: HttpServerAdapter;
 
-    constructor() {
-        this.fastifyInstance = fastify({ logger: true });
+    constructor (serverAdapter: HttpServerAdapter) {
+        this.serverAdapter = serverAdapter;
     }
 
-    private registerRoutes(): void {
-        Dispatcher.resolver(this.fastifyInstance);
+    public dispatch(): void {
+        const routes = Router.discover();
+
+        for (const route of routes) {
+            this.serverAdapter.registerRoute(route);
+        }
     }
 
     public async start() {
         try {
-            this.registerRoutes();
-            await this.fastifyInstance.listen({ port: 8080 });
+            this.dispatch();
+            await this.serverAdapter.listen(8080);
         } catch (err) {
-            this.fastifyInstance.log.error(err);
+            this.serverAdapter.logError(err);
             process.exit(1);
         }
     }

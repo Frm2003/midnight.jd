@@ -1,5 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { METADATA_KEYS } from "../../metadatas/metadataKeys";
+
 import PathResolver from "./Resolvers/PathResolver";
 import BodyResolver from "./Resolvers/BodyResolver";
 
@@ -13,7 +14,7 @@ export default class ParameterResolver {
         ];
     }
 
-    public static getArgs(req: FastifyRequest, controller: AnyController, method: string | symbol): any[] {
+    public static getArgs(req: HttpRequest, controller: AnyController, method: string | symbol): any[] {
         const resolvedParams: any[] = [];
 
         const params: ParamMetadata[] =

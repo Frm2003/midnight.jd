@@ -1,4 +1,3 @@
-import { FastifyRequest } from "fastify";
 import Conversor from "../../../../conversor/Conversor";
 
 export default class BodyResolver implements ParamResolver {
@@ -8,7 +7,7 @@ export default class BodyResolver implements ParamResolver {
         this.source = 'body';
     }
 
-    public resolver(req: FastifyRequest, paramMetadata: ParamMetadata) {
+    public resolver(req: HttpRequest, paramMetadata: ParamMetadata) {
         const source = req[this.source];
         return Conversor.convert(source, paramMetadata.type);
     }
