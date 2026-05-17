@@ -1,0 +1,32 @@
+{
+    "name": "@midnight.jd/core",
+    "version": "0.0.1",
+    "description": "Core IoC and Dependency Injection container for Spring TS",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w",
+        "clean": "rm -rf dist"
+    },
+    "keywords": [
+        "ioc",
+        "di",
+        "dependency-injection",
+        "typescript",
+        "spring",
+        "container"
+    ],
+    "author": "Felippe Ramos",
+    "license": "MIT",
+    "peerDependencies": {
+        "reflect-metadata": "^0.2.2"
+    },
+    "devDependencies": {
+        "@types/node": "^25.6.0",
+        "typescript": "^6.0.3"
+    }
+}
