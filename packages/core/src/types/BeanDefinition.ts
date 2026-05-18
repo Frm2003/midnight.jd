@@ -2,7 +2,7 @@ import BeanScope from "./BeanScope";
 import ModuleConstructor from "./ModuleConstructor";
 
 type BeanDefinition = {
-    token: ModuleConstructor;
+    token: symbol;
     target: ModuleConstructor;
     dependencies: ModuleConstructor[];
     scope: BeanScope;
