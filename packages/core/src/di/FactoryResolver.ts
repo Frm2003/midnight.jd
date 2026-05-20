@@ -1,9 +1,9 @@
-import type { BeanDefinition, BeanFactory, ModuleConstructor } from "../types";
+import type { BeanDefinition, BeanFactory, Token } from "../types";
 
 export default class FactoryResolver {
-    private static factories = new Map<symbol, BeanFactory>();
+    private static factories = new Map<Token, BeanFactory>();
 
-    public static resolve(beans: Map<symbol, BeanDefinition>) {
+    public static resolve(beans: Map<Token, BeanDefinition>) {
         for (const bean of beans.values()) {
             this.resolveBean(bean, beans);
         }
@@ -11,12 +11,12 @@ export default class FactoryResolver {
         return this.factories;
     }
 
-    private static resolveBean(bean: BeanDefinition, beans: Map<symbol, BeanDefinition>) {
+    private static resolveBean(bean: BeanDefinition, beans: Map<Token, BeanDefinition>) {
         if (this.factories.has(bean.token))
             return this.factories.get(bean.token)!;
 
         const deps = bean.dependencies.map(depToken => {
-            const depBean = beans.get(Symbol(depToken.name));
+            const depBean = beans.get(depToken);
 
             if (!depBean)
                 throw new Error(`Dep not found: ${depToken.toString()}`);

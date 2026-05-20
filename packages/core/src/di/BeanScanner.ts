@@ -1,11 +1,11 @@
 import { METADATA_KEYS } from "../metadatas/metadataKeys";
 
-import type { BeanDefinition, BeanScope, ModuleConstructor } from "../types";
+import type { BeanDefinition, BeanScope, ModuleConstructor, Token } from "../types";
 
 export default class BeanScanner {
 
-    public static filterModules(modules: ModuleConstructor[]): Map<symbol, BeanDefinition> {
-        const beans: Map<symbol, BeanDefinition> = new Map();
+    public static filterModules(modules: ModuleConstructor[]): Map<Token, BeanDefinition> {
+        const beans: Map<Token, BeanDefinition> = new Map();
 
         for (const module of modules) {
             const isComponent: boolean = Reflect.getMetadata(METADATA_KEYS.COMPONENT, module);
@@ -14,16 +14,14 @@ export default class BeanScanner {
                 const dependencies: ModuleConstructor[] = Reflect.getMetadata("design:paramtypes", module) ?? [];
                 const stereoType = Reflect.getMetadata(METADATA_KEYS.STEREOTYPES, module) ?? 'component';
                 const scope: BeanScope = Reflect.getMetadata(METADATA_KEYS.SCOPE, module) ?? 'singleton';
-                
-                const token = Symbol(module.name);
 
-                beans.set(token, {
+                beans.set(module, {
                     target: module,
-                    token: Symbol(module.name),
+                    token: module,
                     dependencies,
                     scope,
                     stereoType,
-                })
+                });
             }
         }
 

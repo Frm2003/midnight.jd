@@ -8,3 +8,5 @@ export { default as Service } from "./decorators/stereotypes/Service";
 
 export { default as BeanRegistry } from './di/BeanRegistry';
 export { default as Container } from './di/Container';
+
+export { default as MidnightModule } from './types/MidnightModule';

@@ -1,18 +1,18 @@
-import type { BeanFactory, BeanScope, Provider } from "../types";
+import type { BeanFactory, BeanScope, Provider, Token } from "../types";
 
 export default class Container {
-    private static providers: Map<symbol, Provider> = new Map();
-    private static instances: Map<symbol, any> = new Map();
+    private static providers: Map<Token, Provider> = new Map();
+    private static instances: Map<Token, any> = new Map();
 
     public static register(
-        token: symbol,
+        token: Token,
         factory: BeanFactory,
         scope: BeanScope
     ) {
         this.providers.set(token, { factory, scope });
     }
 
-    public static get<T>(token: symbol): T {
+    public static get<T>(token: Token): T {
         const { factory, scope } = this.providers.get(token)!;
 
         if (scope === "singleton") {

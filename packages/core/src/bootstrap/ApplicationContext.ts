@@ -6,13 +6,13 @@ import Container from "../di/Container";
 import FactoryResolver from "../di/FactoryResolver";
 import Loader from "../infra/Loader";
 
-import type { BeanDefinition, MidnightModule, ModuleConstructor } from "../types";
+import type { BeanDefinition, ModuleConstructor, Token } from "../types";
 
 export default class ApplicationContext {
 
-    public static async init(modules: MidnightModule[]) {
+    public static async init() {
         const moduleConstructors: ModuleConstructor[] = await Loader.loadImports();
-        const beans: Map<symbol, BeanDefinition> = BeanScanner.filterModules(moduleConstructors);
+        const beans: Map<Token, BeanDefinition> = BeanScanner.filterModules(moduleConstructors);
 
         BeanRegistry.registerAll(beans);
 
@@ -25,10 +25,6 @@ export default class ApplicationContext {
                 throw new Error(`Factory not found: ${bean.target.toString()}`);
 
             Container.register(bean.token, factory, bean.scope);
-        }
-
-        for (const module of modules) {
-            await module.init();
         }
     }
 }
