@@ -6,7 +6,7 @@ import Container from "../di/Container";
 import FactoryResolver from "../di/FactoryResolver";
 import Loader from "../infra/Loader";
 
-import type { BeanDefinition, ModuleConstructor, Token } from "../types";
+import type { BeanDefinition, MidnightModule, ModuleConstructor, Token } from "../types";
 
 export default class ApplicationContext {
 
@@ -25,6 +25,11 @@ export default class ApplicationContext {
                 throw new Error(`Factory not found: ${bean.target.toString()}`);
 
             Container.register(bean.token, factory, bean.scope);
+
+            if (bean.stereoType === 'module') {
+                const module = Container.get(bean.token) as Partial<MidnightModule>;
+                await module.init?.();
+            }
         }
     }
 }
