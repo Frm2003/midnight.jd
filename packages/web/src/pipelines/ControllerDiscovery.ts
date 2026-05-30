@@ -8,7 +8,7 @@ export default class ControllerDiscovery {
 
         for (const bean of beans.values()) {
             if (bean.stereoType != 'controller') continue;
-            controllers.push(Container.get(bean.target));
+            controllers.push(Container.get(bean.token));
         }
 
         return controllers;

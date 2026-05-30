@@ -1,16 +1,23 @@
-import HttpServer from "../bootstrap/HttpServer";
+import { Module, type MidnightModule } from "@midnight.jd/core";
 
-import type { HttpServerAdapter, MidnightModule } from "../types";
+import Router from "../pipelines/Router";
+import HttpServerAdapter from "../bootstrap/HttpServerAdapter";
 
+@Module
 export default class WebModule implements MidnightModule {
     name: string = 'web';
 
     dependencies: string[] = ['core', 'conversor'];
 
-    constructor(private readonly httpServerAdapter: HttpServerAdapter) {}
+    constructor(private readonly serverAdapter: HttpServerAdapter) { }
 
     async init() {
-        const server = new HttpServer(this.httpServerAdapter);
-        await server.start();
+        const routes = Router.discover();
+
+        for (const route of routes) {
+            this.serverAdapter.registerRoute(route);
+        }
+
+        await this.serverAdapter.listen(8080);
     }
 }
