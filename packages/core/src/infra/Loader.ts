@@ -5,24 +5,58 @@ import type { ModuleConstructor } from "../types";
 export default class Loader {
 
     public static async loadImports(): Promise<ModuleConstructor[]> {
-        const files: Set<string> = await FileService.scanDirs();
+        const localFiles = await FileService.scanDirs({
+            dir: 'src'
+        });
 
-        const modules: ModuleConstructor[] = [];
+        const externalFiles = this.loadModulesImports();
 
-        await Promise.all(
-            [...files].map(async (file) => {
-                try {
-                    const mod = await import(file);
+        const files = [
+            ...localFiles,
+            ...externalFiles
+        ];
 
-                    if (typeof mod.default === "function") {
-                        modules.push(mod.default);
-                    }
-                } catch (err) {
-                    console.error(`Fail loading module: ${file}`, err);
-                }
-            })
+        const imports = await Promise.all(
+            files.map(file => this.importModule(file))
         );
 
-        return modules;
+        return imports.filter(Boolean) as ModuleConstructor[];
+    }
+
+    private static async importModule(
+        file: string
+    ): Promise<ModuleConstructor | null> {
+        try {
+            const mod = await import(file);
+
+            if (typeof mod.default === 'function')
+                return mod.default;
+
+            if (typeof mod.Module === 'function')
+                return mod.Module;
+
+            return null;
+        } catch (err) {
+            console.error(`Fail loading module: ${file}`, err);
+            return null;
+        }
+    }
+
+    private static loadModulesImports(): string[] {
+        const files: string[] = [];
+
+        const candidates: string[] = [
+            '@midnight.jd/web'
+        ]
+
+        for (const candidate of candidates) {
+            try {
+                files.push(require.resolve(candidate));
+            } catch (ignored) {
+                // pacote não instalado
+            }
+        }
+
+        return files;
     }
 }

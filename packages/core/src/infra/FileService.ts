@@ -2,23 +2,24 @@ import path from 'path';
 import fs from 'fs/promises';
 
 export default class FileService {
-    private static dirPath = path.resolve(process.cwd(), 'src');
 
     public static async scanDirs(
-        { dir = this.dirPath, set = new Set<string>() }: { dir?: string; set?: Set<string> } = {}
+        { dir = '', set = new Set<string>() }: { dir?: string; set?: Set<string> } = {}
     ): Promise<Set<string>> {
-        const dirHandler = await fs.opendir(dir);
+        const realPath = path.resolve(process.cwd(), dir);
+
+        const dirHandler = await fs.opendir(realPath);
 
         for await (const entry of dirHandler) {
-            const fullPath: string = path.resolve(dir, entry.name);
+            const fullPath = path.resolve(realPath, entry.name);
 
             if (entry.isDirectory()) {
                 await this.scanDirs({ dir: fullPath, set });
+                continue;
             }
 
-            if (entry.isFile()) {
+            if (entry.isFile())
                 set.add(fullPath);
-            }
         }
 
         return set;
