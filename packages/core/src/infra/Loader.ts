@@ -11,13 +11,13 @@ export default class Loader {
 
         const externalFiles = this.loadModulesImports();
 
-        const files = [
+        const files = new Set<string>([
             ...localFiles,
             ...externalFiles
-        ];
+        ]);
 
         const imports = await Promise.all(
-            files.map(file => this.importModule(file))
+            Array.from(files).map(this.importModule)
         );
 
         return imports.filter(Boolean) as ModuleConstructor[];
@@ -42,8 +42,8 @@ export default class Loader {
         }
     }
 
-    private static loadModulesImports(): string[] {
-        const files: string[] = [];
+    private static loadModulesImports(): Set<string> {
+        const files = new Set<string>();
 
         const candidates: string[] = [
             '@midnight.jd/web'
@@ -51,7 +51,7 @@ export default class Loader {
 
         for (const candidate of candidates) {
             try {
-                files.push(require.resolve(candidate));
+                files.add(require.resolve(candidate));
             } catch (ignored) {
                 // pacote não instalado
             }
