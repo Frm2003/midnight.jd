@@ -1,5 +1,5 @@
 {
-    "name": "@midnight.jd/core",
+    "name": "@midnight_jd/core",
     "version": "0.0.1",
     "description": "Core IoC and Dependency Injection container for Spring TS",
     "main": "dist/index.js",

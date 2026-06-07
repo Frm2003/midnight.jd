@@ -1,5 +1,5 @@
 {
-	"name": "@midnight.jd/conversor",
+	"name": "@midnight_jd/conversor",
 	"version": "0.0.1",
 	"description": "Type conversion utilities for midnight",
 	"main": "dist/index.js",

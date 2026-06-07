@@ -1,5 +1,5 @@
 {
-    "name": "@midnight.jd/web",
+    "name": "@midnight_jd/web",
     "version": "0.0.1",
     "description": "Web module for Spring TS",
     "main": "dist/index.js",
@@ -23,8 +23,8 @@
     "author": "Felippe Ramos",
     "license": "MIT",
     "peerDependencies": {
-        "@midnight.jd/core": "^0.0.1",
-        "@midnight.jd/conversor": "^0.0.1",
+        "@midnight_jd/core": ">=0.0.1 <0.1.0",
+        "@midnight_jd/conversor": ">=0.0.1 <0.1.0",
         "reflect-metadata": "^0.2.2"
     },
     "devDependencies": {
