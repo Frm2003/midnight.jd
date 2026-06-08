@@ -1,6 +1,6 @@
 {
-    "name": "@midnight_jd/core",
-    "version": "0.0.1",
+    "name": "@midnightjd/core",
+    "version": "0.0.1-fix-loader",
     "description": "Core IoC and Dependency Injection container for Spring TS",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

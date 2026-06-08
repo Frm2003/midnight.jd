@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 import type { Converter } from "./types";
 
 export default class Conversor {

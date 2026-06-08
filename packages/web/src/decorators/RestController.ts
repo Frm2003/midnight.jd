@@ -1,4 +1,4 @@
-import { Controller } from "@midnight.jd/core";
+import { Controller } from "@midnightjd/core";
 import { METADATA_KEYS } from "../metadatas/metadataKeys";
 
 export default function RestController(): ClassDecorator;

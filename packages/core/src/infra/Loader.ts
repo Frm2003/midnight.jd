@@ -46,7 +46,7 @@ export default class Loader {
         const files = new Set<string>();
 
         const candidates: string[] = [
-            '@midnight-jd/web'
+            '@midnightjd/web'
         ]
 
         for (const candidate of candidates) {

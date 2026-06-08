@@ -1,4 +1,4 @@
-import { BeanRegistry, Container } from "@midnight.jd/core";
+import { BeanRegistry, Container } from "@midnightjd/core";
 
 export default class ControllerDiscovery {
     public static resolve() {

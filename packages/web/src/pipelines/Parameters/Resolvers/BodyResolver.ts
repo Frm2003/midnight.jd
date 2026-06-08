@@ -1,5 +1,5 @@
 
-import { Conversor } from "@midnight.jd/conversor";
+import { Conversor } from "@midnightjd/conversor";
 
 import type { HttpRequest, ParamMetadata, ParamResolver, SourceParam } from "../../../types";
 

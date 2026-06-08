@@ -1,4 +1,4 @@
-import { Module, type MidnightModule } from "@midnight.jd/core";
+import { Module, type MidnightModule } from "@midnightjd/core";
 
 import Router from "../pipelines/Router";
 import HttpServerAdapter from "../bootstrap/HttpServerAdapter";
